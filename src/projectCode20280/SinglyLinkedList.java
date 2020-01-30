@@ -30,6 +30,29 @@ public class SinglyLinkedList<E> implements List<E> {
 		}
 	}
 
+	private class ListIterator implements Iterator<E>{
+		Node curr;
+
+
+		public ListIterator(){
+			curr = head;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return curr != null;
+		}
+
+		@Override
+		public E next() {
+			E res = (E) curr.getElement();
+			curr = curr.getNext();
+			return res;
+		}
+	}
+
+
+
 	@Override
 	public String toString(){
 		String retStr = "Contents:\n";
@@ -73,8 +96,25 @@ public class SinglyLinkedList<E> implements List<E> {
 
 	@Override
 	public void add(int i, E e) {
-
-
+		Node<E> newNode = new Node<E>(e, null);
+		Node<E> currentNode = head;
+		i--;
+		if(i > size){
+			System.out.println("Index does not exist");
+		}
+		else{
+			for(int count = 0; count < size; count++){
+				if(i == count){
+					newNode.setNext(currentNode.getNext());
+					currentNode.setNext(newNode);
+					break;
+				}
+				else{
+					currentNode = currentNode.getNext();
+				}
+			}
+		}
+		size++;
 	}
 
 	@Override
@@ -98,8 +138,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
 	@Override
 	public Iterator<E> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ListIterator();
 	}
 
 	@Override
@@ -176,6 +215,12 @@ public class SinglyLinkedList<E> implements List<E> {
 
 
 		System.out.println(sll.get(2));
+		sll.add(1, "A");
+		System.out.println(sll.toString());
+
+		for(String s: sll){
+			System.out.println(s);
+		}
 
 	}
 }
