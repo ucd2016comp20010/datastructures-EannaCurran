@@ -4,31 +4,95 @@ import java.util.Iterator;
 
 public class SinglyLinkedList<E> implements List<E> {
 
-	private class Node<E> {
-		/// TODO
+	private Node<E> head = null;
+	private Node<E> tail = null;
+	private int size = 0;
+
+	public SinglyLinkedList(){
+
 	}
+
+	private class Node<E> {
+		private E element;
+		private Node<E> next;
+		public Node(E e, Node<E> n){
+			element = e;
+			next = n;
+		}
+		public E getElement(){
+			return element;
+		}
+		public Node<E> getNext(){
+			return next;
+		}
+		public void setNext(Node <E> n){
+			next = n;
+		}
+	}
+
+	@Override
+	public String toString(){
+		String retStr = "Contents:\n";
+
+		Node<E> current = head;
+		while(current != null){
+			retStr += current.getElement();
+			current = current.getNext();
+
+		}
+
+		return retStr;
+	}
+
+
 	
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
+		if(size==0){
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public E get(int i) {
-		// TODO Auto-generated method stub
+		Node<E> currentNode = head;
+		if(i > size){
+			return null;
+		}
+		for(int count = 0; count < size; count++){
+			if(i == count){
+				return currentNode.getElement();
+			}
+			else{
+				currentNode = currentNode.getNext();
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public void add(int i, E e) {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public E remove(int i) {
-		// TODO Auto-generated method stub
+		Node<E> currentNode = head;
+		if(i > size){
+			return null;
+		}
+		for(int count = 0; count < size; count++){
+			if(i == count){
+				currentNode.setNext(currentNode.getNext());
+				break;
+			}
+			else{
+				currentNode = currentNode.getNext();
+			}
+		}
+		size--;
 		return null;
 	}
 
@@ -40,35 +104,57 @@ public class SinglyLinkedList<E> implements List<E> {
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}	
 	
 
 	@Override
 	public E removeFirst() {
-		// TODO Auto-generated method stub
+		head = head.getNext();
+		size--;
 		return null;
 	}
 
 	@Override
 	public E removeLast() {
-		// TODO Auto-generated method stub
+		Node<E> currentNode = head;
+		if (currentNode == null) {
+			head = tail;
+		}
+		else{
+			while( currentNode.getNext().getNext() != null){
+				currentNode = currentNode.getNext();
+			}
+			currentNode.setNext(tail);
+		}
+		size--;
 		return null;
 	}
 
 	@Override
 	public void addFirst(E e) {
-		// TODO Auto-generated method stub
-		
+		head = new Node<E>(e, head);
+		size++;
 	}
 
 	@Override
 	public void addLast(E e) {
-		// TODO Auto-generated method stub
+		Node<E> newLast = new Node<E>(e, null);
+		Node<E> currentNode = head;
+		if (currentNode == null) {
+			head = newLast;
+		}
+		else {
+			while( currentNode.getNext() != null){
+				currentNode = currentNode.getNext();
+			}
+			currentNode.setNext(newLast);
+		}
+
+		size++;
 		
 	}
-	
+
 	public static void main(String[] args) {
 		String[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -87,11 +173,9 @@ public class SinglyLinkedList<E> implements List<E> {
 
 		sll.remove(2);
 		System.out.println(sll.toString());
-		
-		for (String s : sll) {
-			System.out.print(s + ", ");
-		}
+
+
+		System.out.println(sll.get(2));
+
 	}
-
-
 }
