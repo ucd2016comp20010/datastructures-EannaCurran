@@ -12,7 +12,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
 	}
 
-	private class Node<E> {
+	public class Node<E> {
 		private E element;
 		private Node<E> next;
 		public Node(E e, Node<E> n){
@@ -55,7 +55,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
 	@Override
 	public String toString(){
-		String retStr = "Contents:\n";
+		String retStr = "";
 
 		Node<E> current = head;
 		while(current != null){
@@ -191,7 +191,7 @@ public class SinglyLinkedList<E> implements List<E> {
 		}
 
 		size++;
-		
+
 	}
 
 	public static void main(String[] args) {
@@ -202,25 +202,25 @@ public class SinglyLinkedList<E> implements List<E> {
 			sll.addFirst(s);
 			sll.addLast(s);
 		}
-		System.out.println(sll.toString());
+		System.out.println(sll);
 
 		sll.removeFirst();
-		System.out.println(sll.toString());
+		System.out.println(sll);
 		
 		sll.removeLast();
-		System.out.println(sll.toString());
+		System.out.println(sll);
 
 		sll.remove(2);
-		System.out.println(sll.toString());
+		System.out.println(sll);
 
 
 		System.out.println(sll.get(2));
 		sll.add(1, "A");
-		System.out.println(sll.toString());
+		System.out.println(sll);
 
 		for(String s: sll){
 			System.out.println(s);
-		}
 
+		}
 	}
 }
