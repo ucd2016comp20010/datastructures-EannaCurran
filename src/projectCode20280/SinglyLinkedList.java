@@ -33,7 +33,6 @@ public class SinglyLinkedList<E> implements List<E> {
 	private class ListIterator implements Iterator<E>{
 		Node curr;
 
-
 		public ListIterator(){
 			curr = head;
 		}
@@ -45,7 +44,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
 		@Override
 		public E next() {
-			E res = (E) curr.getElement();
+			E res = (E)curr.getElement();
 			curr = curr.getNext();
 			return res;
 		}
@@ -60,6 +59,7 @@ public class SinglyLinkedList<E> implements List<E> {
 		Node<E> current = head;
 		while(current != null){
 			retStr += current.getElement();
+			retStr += " ";
 			current = current.getNext();
 
 		}
@@ -195,32 +195,40 @@ public class SinglyLinkedList<E> implements List<E> {
 	}
 
 	public static void main(String[] args) {
-		String[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+		SinglyLinkedList<Integer> ll = new SinglyLinkedList<Integer>();
 
-		SinglyLinkedList<String> sll = new SinglyLinkedList<String>();
-		for (String s : alphabet) {
-			sll.addFirst(s);
-			sll.addLast(s);
-		}
-		System.out.println(sll);
+		ll.addFirst(0);
+		ll.addFirst(1);
+		ll.addFirst(3);
+		ll.addFirst(4);
+		ll.addFirst(5);
+		ll.add(3,2);
+		System.out.println(ll);
 
-		sll.removeFirst();
-		System.out.println(sll);
-		
-		sll.removeLast();
-		System.out.println(sll);
+		ll.addFirst(-100);
+		ll.addFirst(+100);
+		System.out.println(ll);
 
-		sll.remove(2);
-		System.out.println(sll);
+		ll.removeFirst();
+		ll.removeLast();
 
+		ll.remove(2);
+		System.out.println(ll);
 
-		System.out.println(sll.get(2));
-		sll.add(1, "A");
-		System.out.println(sll);
+		ll.removeFirst();
+		System.out.println(ll);
 
-		for(String s: sll){
-			System.out.println(s);
+		ll.removeLast();
+		System.out.println(ll);
 
-		}
+		ll.removeFirst();
+		System.out.println(ll);
+
+		ll.addFirst(9999);
+		ll.addFirst(8888);
+		ll.addFirst(7777);
+		System.out.println(ll);
+		System.out.println(ll.get(1));
+
 	}
 }
