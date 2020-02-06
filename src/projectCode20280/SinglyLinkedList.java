@@ -31,7 +31,7 @@ public class SinglyLinkedList<E> implements List<E> {
 	}
 
 	private class ListIterator implements Iterator<E>{
-		Node curr;
+		Node<E> curr;
 
 		public ListIterator(){
 			curr = head;
@@ -96,7 +96,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
 	@Override
 	public void add(int i, E e) {
-		Node<E> newNode = new Node<E>(e, null);
+		Node<E> newNode = new Node<>(e, null);
 		Node<E> currentNode = head;
 		i--;
 		if(i > size){
@@ -172,13 +172,13 @@ public class SinglyLinkedList<E> implements List<E> {
 
 	@Override
 	public void addFirst(E e) {
-		head = new Node<E>(e, head);
+		head = new Node<>(e, head);
 		size++;
 	}
 
 	@Override
 	public void addLast(E e) {
-		Node<E> newLast = new Node<E>(e, null);
+		Node<E> newLast = new Node<>(e, null);
 		Node<E> currentNode = head;
 		if (currentNode == null) {
 			head = newLast;
@@ -192,6 +192,10 @@ public class SinglyLinkedList<E> implements List<E> {
 
 		size++;
 
+	}
+
+	public E first(){
+		return head.getElement();
 	}
 
 	public static void main(String[] args) {
