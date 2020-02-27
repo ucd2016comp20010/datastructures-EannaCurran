@@ -1,4 +1,4 @@
-package projectCode20280;
+package projectCode20280.Practical2;
 
 public class ArrayQueue<E> implements Queue<E> {
 
@@ -50,13 +50,13 @@ public class ArrayQueue<E> implements Queue<E> {
     public String toString(){
         String answer = "";
         for(int i = f; i < size+f; i++){
-            answer += data[i];
+            answer = answer + data[i];
         }
         return answer;
     }
 
     public static void main(String[] args) {
-        ArrayQueue<Integer> ll = new ArrayQueue<Integer>();
+        ArrayQueue<Integer> ll = new ArrayQueue<>();
         ll.enqueue(1);
         ll.enqueue(2);
         ll.enqueue(3);

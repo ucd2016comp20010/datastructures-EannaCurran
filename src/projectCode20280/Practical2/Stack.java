@@ -1,4 +1,4 @@
-package projectCode20280;
+package projectCode20280.Practical2;
 
 public interface Stack<E> {
 

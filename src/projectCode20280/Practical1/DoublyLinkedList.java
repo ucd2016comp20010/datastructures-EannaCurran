@@ -1,4 +1,4 @@
-package projectCode20280;
+package projectCode20280.Practical1;
 
 import java.util.Iterator;
 
@@ -40,8 +40,8 @@ public class DoublyLinkedList<E> implements List<E> {
 	}
 
 	public DoublyLinkedList(){
-		header = new Node<E>(null, null, null);
-		trailer = new Node<E>( null, header, null);
+		header = new Node<>(null, null, null);
+		trailer = new Node<>( null, header, null);
 		header.setNext(trailer);
 	}
 
@@ -59,8 +59,8 @@ public class DoublyLinkedList<E> implements List<E> {
 
 		@Override
 		public E next() {
-			E res = (E)curr.getElement();
-			curr = curr.getNext();
+			var res = (E)curr.getElement();
+			curr = (Node)curr.getNext();
 			return res;
 		}
 	}
@@ -79,10 +79,7 @@ public class DoublyLinkedList<E> implements List<E> {
 
 	@Override
 	public boolean isEmpty() {
-		if(size == 0){
-			return true;
-		}
-		return false;
+		return size == 0;
 	}
 
 	@Override
@@ -105,7 +102,7 @@ public class DoublyLinkedList<E> implements List<E> {
 
 	@Override
 	public void add(int i, E e) {
-		Node<E> newNode = new Node<E>(e, null, null);
+		Node<E> newNode = new Node<>(e, null, null);
 		Node<E> currentNode = header;
 		i--;
 		if (i > size) {
@@ -136,20 +133,19 @@ public class DoublyLinkedList<E> implements List<E> {
 	}
 
 	@Override
-	public E remove(int i){
+	public void remove(int i){
 		Node<E> currentNode = header;
-		if(i > size){
-			return null;
-		}
-		for(int j = 0; j < i; j++){
-			if(j == i){
-				currentNode.setNext(currentNode.getNext());
+		if(i > size) {
+			for (int j = 0; j < i + 1; j++) {
+				if (j == i) {
+					currentNode.setNext(currentNode.getNext());
+					size--;
+					break;
+				} else {
+					currentNode = currentNode.getNext();
+				}
 			}
-			else{
-				currentNode = currentNode.getNext();
-			}
 		}
-		return null;
 
 	}
 
@@ -176,20 +172,19 @@ public class DoublyLinkedList<E> implements List<E> {
 
 
 	@Override
-	public E removeFirst() {
-		if(isEmpty()) {
-			return null;
+	public void removeFirst() {
+		if(size != 0) {
+
+			removeNode(header.getNext());
 		}
-		return removeNode(header.getNext());
 	}
 
 	@Override
-	public E removeLast() {
-		if(isEmpty()) {
-			return null;
-		}
+	public void removeLast() {
+		if(size != 0) {
 
-		return removeNode(trailer.getPrevious());
+			removeNode(trailer.getPrevious());
+		}
 	}
 	
 
@@ -209,8 +204,8 @@ public class DoublyLinkedList<E> implements List<E> {
 
 		Node<E> current = header.getNext();
 		for(int i = 0; i < size; i++){
-			retStr += current.getElement();
-			retStr += " ";
+			retStr = retStr + current.getElement();
+			retStr = retStr + " ";
 			current = current.getNext();
 
 		}
@@ -221,7 +216,7 @@ public class DoublyLinkedList<E> implements List<E> {
 	}
 	
 	public static void main(String[] args) {
-		   DoublyLinkedList<Integer> ll = new DoublyLinkedList<Integer>();
+		   DoublyLinkedList<Integer> ll = new DoublyLinkedList<>();
            ll.addFirst(1);
            ll.addFirst(2);
 

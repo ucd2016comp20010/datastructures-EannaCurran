@@ -1,4 +1,6 @@
-package projectCode20280;
+package projectCode20280.Practical2;
+
+import projectCode20280.Practical1.SinglyLinkedList;
 
 public class LinkedQueue<E> implements Queue<E> {
 
@@ -29,7 +31,10 @@ public class LinkedQueue<E> implements Queue<E> {
 
     @Override
     public E dequeue() {
-        return list.removeFirst();
+
+        E e = list.get(0);
+        list.remove(0);
+        return e;
     }
 
     @Override

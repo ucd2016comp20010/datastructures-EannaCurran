@@ -6,7 +6,7 @@
  * 
  */
 
-package projectCode20280;
+package projectCode20280.Practical1;
 
 import java.util.Iterator;
 
@@ -23,10 +23,10 @@ public interface List<E> extends Iterable<E> {
 	void addFirst(E e);
 	void addLast(E e);
 	
-	E remove(int i);
+	void remove(int i);
 
-	E removeFirst();
-	E removeLast();
+	void removeFirst();
+	void removeLast();
 	
 	Iterator<E> iterator();
 }

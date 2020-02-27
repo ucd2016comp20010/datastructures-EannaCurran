@@ -1,4 +1,4 @@
-package projectCode20280.Practical6;
+package projectCode20280.Practical5;
 
 /**
  * Concrete implementation of a binary tree using a node-based, linked structure.
@@ -48,18 +48,48 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
         public Node<E> getParent() { return this.parent; }
 
 
-
+        /**
+         * Getter method for left
+         * @return Left child Node of this Node
+         */
         public Node<E> getLeft() { return this.left; }
 
+
+        /**
+         * Getter method for right
+         * @return Right child Node of this Node
+         */
         public Node<E> getRight() { return this.right; }
 
+
+        /**
+         * Setter method for element
+         * @param e: New element to be set
+         */
         public void setElement(E e){ this.element = e; }
 
+
+        /**
+         * Setter method for parent
+         * @param parent: New parent to be set
+         */
         public void setParent(Node<E> parent){ this.parent = parent; }
 
+
+        /**
+         * Setter method for left
+         * @param left: New left Node child to be set
+         */
         public void setLeft(Node<E> left){ this.left = left; }
 
+
+        /**
+         * Setter method for right
+         * @param right: New right Node child to be set
+         */
        public void setRight(Node<E> right){ this.right = right; }
+
+
     }
 
     /**
@@ -95,7 +125,7 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
      * to this particular list instance.
      *
      * @param p a Position (that should belong to this tree)
-     * @return the underlying Node instance for theb position
+     * @return the underlying Node instance for the position
      * @throws IllegalArgumentException if an invalid position is detected
      */
     protected Node<E> validate(Position<E> p) throws IllegalArgumentException {
@@ -103,7 +133,7 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
             throw new IllegalArgumentException("Not valid position type");
         Node<E> node = (Node<E>) p;       // safe cast
         if (node.getParent() == node)     // our convention for defunct node
-            throw new IllegalArgumentException("p is no longer in the tree");
+           throw new IllegalArgumentException("p is no longer in the tree");
         return node;
     }
 
@@ -138,8 +168,10 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
      */
     @Override
     public Position<E> parent(Position<E> p) throws IllegalArgumentException {
-        //TODO
-        return null;
+
+        // Checks that p is a Node in the Tree, is so it's Parent Node is returned
+        Node<E> node = validate(p);
+        return node.getParent();
     }
 
     /**
@@ -151,8 +183,10 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
      */
     @Override
     public Position<E> left(Position<E> p) throws IllegalArgumentException {
-        //TODO
-        return null;
+
+        // Checks that p is a Node in the Tree, is so it's left child Node is returned
+        Node<E> node = validate(p);
+        return node.getLeft();
     }
 
     /**
@@ -164,8 +198,10 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
      */
     @Override
     public Position<E> right(Position<E> p) throws IllegalArgumentException {
-        //TODO
-        return null;
+
+        // Checks that p is a Node in the Tree, is so it's right child Node is returned
+        Node<E> node = validate(p);
+        return node.getRight();
     }
 
     // update methods supported by this class
@@ -178,8 +214,21 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
      * @throws IllegalStateException if the tree is not empty
      */
     public Position<E> addRoot(E e) throws IllegalStateException {
-        //TODO
-        return null;
+
+        // Checks that the list is not empty, if so IllegalStateException is thrown
+        if (!isEmpty()) {
+
+            throw new IllegalStateException("Cannot add root to non empty Tree");
+        }
+
+        // Sets root to a new Node with element e;
+        root = createNode(e, null, null, null);
+
+        // Increases the size of the Tree
+        size++;
+
+        // Returns the new root
+        return root;
     }
 
     public void insert(E e) {
@@ -190,8 +239,20 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
 
     //recursively add Nodes to binary tree in proper position
     private Node<E> addRecursive(Node<E> p, E e) {
-        //TODO
-        return null;
+
+        if(p == null){
+            return createNode(e, null, null, null);
+        }
+
+            if (e.compareTo(p.getElement()) < 0) {
+
+                p.setLeft(addRecursive(p.getLeft(), e));
+            } else {
+
+                p.setRight(addRecursive(p.getRight(), e));
+            }
+
+        return p;
     }
 
 
@@ -205,8 +266,20 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
      * @throws IllegalArgumentException if p already has a left child
      */
     public Position<E> addLeft(Position<E> p, E e) throws IllegalArgumentException {
-        //TODO
-        return null;
+
+        Node<E> parent = validate(p);
+
+        if (parent.getLeft() != null) {
+            throw new IllegalArgumentException("Parent Node already has a left child Node");
+        }
+
+        Node<E> leftChild = createNode(e, parent, null, null);
+
+        parent.setLeft(leftChild);
+
+        size++;
+
+        return leftChild;
     }
 
     /**
@@ -219,8 +292,20 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
      * @throws IllegalArgumentException if p already has a right child
      */
     public Position<E> addRight(Position<E> p, E e) throws IllegalArgumentException {
-        //TODO
-        return null;
+
+        Node<E> parent = validate(p);
+
+        if (parent.getRight() != null) {
+            throw new IllegalArgumentException("Parent Node already has a left child Node");
+        }
+
+        Node<E> rightChild = createNode(e, parent, null, null);
+
+        parent.setRight(rightChild);
+
+        size++;
+
+        return rightChild;
     }
 
     /**
@@ -232,8 +317,12 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
      * @throws IllegalArgumentException if p is not a valid Position for this tree.
      */
     public E set(Position<E> p, E e) throws IllegalArgumentException {
-        //TODO
-        return null;
+
+        Node<E> node = validate(p);
+        E temp = node.getElement();
+        node.setElement(e);
+        return  temp;
+
     }
 
     /**
@@ -246,8 +335,7 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
      * @throws IllegalArgumentException if p is not a valid Position for this tree
      * @throws IllegalArgumentException if p is not a leaf
      */
-    public void attach(Position<E> p, LinkedBinaryTree<E> t1,
-                       LinkedBinaryTree<E> t2) throws IllegalArgumentException {
+    public void attach(Position<E> p, LinkedBinaryTree<E> t1, LinkedBinaryTree<E> t2) throws IllegalArgumentException {
         //TODO
     }
 
@@ -266,14 +354,15 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("[");
+        sb.append("[ ");
         for (Position<E> p : positions()) {
             sb.append(p.getElement());
-            sb.append(", ");
+            sb.append(" ");
         }
         sb.append("]");
         return sb.toString();
     }
+
 
     public static void main(String[] args) {
         LinkedBinaryTree<Integer> bt = new LinkedBinaryTree<>();
@@ -282,7 +371,7 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
         for (int i : arr) {
             bt.insert(i);
         }
-        System.out.println("bt: " + bt.size() + " " + bt);
+        System.out.println(bt);
 
     }
 } 

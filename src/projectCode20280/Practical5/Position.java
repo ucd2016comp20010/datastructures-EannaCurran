@@ -1,4 +1,4 @@
-package projectCode20280.Practical6;
+package projectCode20280.Practical5;
 
 /**
  * An interface for a position which is an abstraction for the

@@ -1,4 +1,6 @@
-package projectCode20280;
+package projectCode20280.Practical2;
+
+import projectCode20280.Practical1.SinglyLinkedList;
 
 public class LinkedStack<E> implements Stack<E> {
 
@@ -19,7 +21,11 @@ public class LinkedStack<E> implements Stack<E> {
     public E top() { return list.first(); }
 
     @Override
-    public E pop() { return list.removeFirst(); }
+    public E pop() {
+        E e = list.get(0);
+        list.remove(0);
+        return e;
+    }
 
     @Override
     public String toString(){

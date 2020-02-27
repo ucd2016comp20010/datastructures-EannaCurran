@@ -1,6 +1,6 @@
-package projectCode20280;
+package projectCode20280.Practical2;
 
-public class ArrayStack<E> implements Stack<E>{
+public class ArrayStack<E> implements Stack<E> {
 
     public static final int CAPACITY = 100;
     private E[] data;
@@ -9,7 +9,7 @@ public class ArrayStack<E> implements Stack<E>{
     public ArrayStack(){ this(CAPACITY);}
 
     public ArrayStack(int capacity){
-        data = (E[]) new Object[capacity];
+        data =  (E[]) new Object[capacity];
     }
 
     @Override
@@ -63,7 +63,7 @@ public class ArrayStack<E> implements Stack<E>{
     }
 
     public static void main(String[] args) {
-        ArrayStack<Integer> ll = new ArrayStack<Integer>();
+        ArrayStack<Integer> ll = new ArrayStack<>();
         ll.push(1);
         ll.push(2);
         ll.push(3);

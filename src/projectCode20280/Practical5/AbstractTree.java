@@ -1,7 +1,7 @@
-package projectCode20280.Practical6;
+package projectCode20280.Practical5;
 
-import projectCode20280.LinkedQueue;
-import projectCode20280.Queue;
+import projectCode20280.Practical2.LinkedQueue;
+import projectCode20280.Practical2.Queue;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -1,4 +1,4 @@
-package projectCode20280.Practical6;
+package projectCode20280.Practical5;
 
 /**
  * An interface for a binary tree, in which each node has at most two children.
