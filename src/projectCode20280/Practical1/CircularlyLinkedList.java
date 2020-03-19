@@ -180,17 +180,17 @@ public class CircularlyLinkedList<E> implements List<E> {
 
 	@Override
 	public String toString(){
-		String retStr = "";
+		StringBuilder retStr = new StringBuilder();
 
 		Node<E> current = tail.getNext();
 		for(int i = 0; i < size; i++) {
-			retStr = retStr + current.getElement();
-			retStr = retStr + " ";
+			retStr.append(current.getElement());
+			retStr.append(" ");
 			current = current.getNext();
 		}
 
 
-			return retStr;
+			return retStr.toString();
 	}
 	
 	
@@ -206,12 +206,6 @@ public class CircularlyLinkedList<E> implements List<E> {
 		System.out.println(ll);
 		ll.rotate();
 		System.out.println(ll);
-
-		ll.removeFirst();
-		ll.rotate();
-
-		ll.removeLast();
-		ll.rotate();
 
 		//for (Integer e : ll) {
 
