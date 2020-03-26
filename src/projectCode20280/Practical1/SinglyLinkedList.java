@@ -1,6 +1,7 @@
 // Practical 1 - Question 1 - Singly Linked List
 
 package projectCode20280.Practical1;
+import java.awt.*;
 import java.util.Iterator;
 
 
@@ -31,6 +32,7 @@ public class SinglyLinkedList<E> implements List<E> {
 		// Declaring variables
 		private E element;
 		private Node<E> next;
+		private Node<E> child;
 
 
 		/**
@@ -38,10 +40,11 @@ public class SinglyLinkedList<E> implements List<E> {
 		 * @param e: Value to be held in the Node
 		 * @param n: Next Node in the list
 		 */
-		public Node(E e, Node<E> n) {
+		public Node(E e, Node<E> n, Node<E> c) {
 
 			element = e;
 			next = n;
+			child = c;
 		}
 
 
@@ -57,6 +60,8 @@ public class SinglyLinkedList<E> implements List<E> {
 		 * @return Next Node
 		 */
 		public Node<E> getNext() { return next; }
+
+		public Node<E> getChild() { return child;}
 
 
 		/**
@@ -115,7 +120,7 @@ public class SinglyLinkedList<E> implements List<E> {
 	public String toString() {
 
 		// Declaring empty String
-		String retStr = "";
+		StringBuilder retStr = new StringBuilder();
 
 		// Accessing head Node
 		Node<E> current = head;
@@ -123,13 +128,13 @@ public class SinglyLinkedList<E> implements List<E> {
 		// Loops through each Node and appends their element to the String
 		while(current != null){
 
-			retStr = retStr + current.getElement();
-			retStr = retStr + " ";
+			retStr.append(current.getElement());
+			retStr.append(" ");
 			current = current.getNext();
 		}
 
 		// Returns the modified String
-		return retStr;
+		return retStr.toString();
 	}
 
 
@@ -182,7 +187,7 @@ public class SinglyLinkedList<E> implements List<E> {
 	public void add(int i, E e) {
 
 		// Creates new Node and current Node
-		Node<E> newNode = new Node<>(e, null);
+		Node<E> newNode = new Node<>(e, null, null);
 		Node<E> currentNode = head;
 
 		// If the index is outside the range of the List, the user is told
@@ -253,6 +258,30 @@ public class SinglyLinkedList<E> implements List<E> {
 		}
 	}
 
+	public Node<E> removeMin(){
+		Node<E> temp = head;
+		Node<E> smallest = head;
+		Node<E> prev = null;
+
+		while (temp != null){
+			if((temp.next != null) && ((Integer) temp.next.element < (Integer) smallest.element)){
+				smallest = temp.next;
+				prev = temp;
+			}
+			temp = temp.next;
+		}
+
+		if(smallest != head){
+			prev.next = smallest.next;
+		}
+		else{
+			temp = head.getNext();
+			head = temp;
+		}
+		size--;
+		return smallest;
+	}
+
 
 	/**
 	 * Overriding method to create new ListIterator* @return
@@ -295,13 +324,13 @@ public class SinglyLinkedList<E> implements List<E> {
 
 	@Override
 	public void addFirst(E e) {
-		head = new Node<>(e, head);
+		head = new Node<>(e, head, null);
 		size++;
 	}
 
 	@Override
 	public void addLast(E e) {
-		Node<E> newLast = new Node<>(e, null);
+		Node<E> newLast = new Node<>(e, null, null);
 		Node<E> currentNode = head;
 		if (currentNode == null) {
 			head = newLast;
@@ -317,56 +346,63 @@ public class SinglyLinkedList<E> implements List<E> {
 
 	}
 
+	public SinglyLinkedList<Integer> addList(SinglyLinkedList<Integer> a, SinglyLinkedList<Integer> b){
+
+		SinglyLinkedList<Integer> result= new SinglyLinkedList<>();
+
+		int sum = 0;
+		int carry = 0;
+
+		while(a.size() > 0 || b.size() > 0) {
+
+			if (a.size() > 0) {
+				sum += a.get(a.size() - 1);
+				a.remove(a.size() - 1);
+			}
+			if (b.size() > 0) {
+				sum += b.get(b.size() - 1);
+				b.remove(b.size() - 1);
+			}
+			sum += carry;
+			if (sum > 9) {
+				carry = 1;
+				sum -= 10;
+			} else {
+				carry = 0;
+			}
+
+			result.addFirst(sum);
+			sum = 0;
+		}
+		if(carry > 0){
+			result.addFirst(carry);
+		}
+		return result;
+
+
+	}
+
 	public E first(){
 		return head.getElement();
 	}
 
 	public static void main(String[] args) {
-		SinglyLinkedList<Integer> ll = new SinglyLinkedList<>();
+		SinglyLinkedList<Integer> one = new SinglyLinkedList<>();
+		SinglyLinkedList<Integer> two = new SinglyLinkedList<>();
 
-		ll.addFirst(0);
-		ll.addFirst(1);
-		ll.addFirst(3);
-		ll.addFirst(4);
-		ll.addFirst(5);
-		ll.add(3, 2);
+		one.addLast(1);
+		one.addLast(2);
+		one.addLast(3);
 
-		System.out.println(ll);
+		two.addLast(1);
+		two.addLast(2);
+		two.addLast(3);
+		two.addLast(9);
 
-		ll.addFirst(-100);
-		ll.addLast(100) ;
+		SinglyLinkedList<Integer> sum = new SinglyLinkedList<>();
+		sum = sum.addList(one, two);
+		System.out.println(sum);
 
-		System.out.println(ll);
-
-		ll.removeFirst();
-		ll.removeLast();
-
-		System.out.println(ll);
-
-		ll.remove(2);
-
-		System.out.println(ll);
-
-		ll.removeFirst();
-
-		System.out.println(ll);
-
-		ll.removeLast();
-
-		System.out.println(ll);
-
-		ll.removeFirst();
-
-		System.out.println(ll);
-
-		ll.addFirst(9999) ;
-		ll.addFirst(8888) ;
-		ll.addFirst(7777) ;
-
-		System.out.println(ll);
-		System.out.println(ll.get(0));
-		System.out.println(ll.get(1));
-		System.out.println(ll.get(2));
 
 
 	}
