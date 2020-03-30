@@ -207,10 +207,6 @@ public class CircularlyLinkedList<E> implements List<E> {
 		ll.rotate();
 		System.out.println(ll);
 
-		//for (Integer e : ll) {
-
-		//	System.out.println("value: " + e);
-		//}
 
 	}
 }

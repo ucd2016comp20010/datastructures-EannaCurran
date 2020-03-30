@@ -25,9 +25,7 @@ public class LinkedQueue<E> implements Queue<E> {
     }
 
     @Override
-    public E first() {
-        return list.first();
-    }
+    public E first() { return list.get(0); }
 
     @Override
     public E dequeue() {

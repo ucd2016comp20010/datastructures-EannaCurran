@@ -18,7 +18,7 @@ public class LinkedStack<E> implements Stack<E> {
     public void push(E e) { list.addFirst(e); }
 
     @Override
-    public E top() { return list.first(); }
+    public E top() { return list.get(0); }
 
     @Override
     public E pop() {
