@@ -10,9 +10,8 @@ import java.util.Iterator;
  */
 public class SinglyLinkedList<E> implements List<E> {
 
-	// Declaring variables for head node, tail node and size
+	// Declaring variables for head node and size
 	protected Node<E> head = null;
-	protected Node<E> tail = null;
 	protected int size = 0;
 
 
@@ -83,18 +82,16 @@ public class SinglyLinkedList<E> implements List<E> {
 
 
 		/**
-		 * Overriding hasNext method in Iterator
+		 * hasNext method in Iterator
 		 * @return Boolean answer to if curr is pointing to no Node
 		 */
-		@Override
 		public boolean hasNext() { return curr != null; }
 
 
 		/**
-		 * Overriding next method in Iterator
+		 * next method in Iterator
 		 * @return Next node in the Iterator
 		 */
-		@Override
 		public E next() {
 
 			// Gets the element in the current Node and moves to the next Node
@@ -108,10 +105,9 @@ public class SinglyLinkedList<E> implements List<E> {
 
 
 	/**
-	 * Overriding the toString
+	 * toString method
 	 * @return String of values in the Singly Linked List
 	 */
-	@Override
 	public String toString() {
 
 		// Declaring empty String
@@ -134,19 +130,17 @@ public class SinglyLinkedList<E> implements List<E> {
 
 
 	/**
-	 * Overriding the isEmpty method
+	 * Method to check if the Linked List is empty
 	 * @return Boolean result for checking if the size is 0
 	 */
-	@Override
 	public boolean isEmpty() { return size==0; }
 
 
 	/**
-	 * Overriding method to get the element of the Node in a given position
+	 *  Method to get the element of the Node in a given position
 	 * @param i: Index of Node to get element
 	 * @return Element of requested Node
 	 */
-	@Override
 	public E get(int i) {
 
 		// Declares variable to hold current Node
@@ -174,11 +168,10 @@ public class SinglyLinkedList<E> implements List<E> {
 
 
 	/**
-	 * Overriding method to add Node into Linked List at a given position
+	 * Method to add Node into Linked List at a given position
 	 * @param i: Index to add the node at
 	 * @param e: Node to add
 	 */
-	@Override
 	public void add(int i, E e) {
 
 		// Creates new Node and current Node
@@ -205,11 +198,6 @@ public class SinglyLinkedList<E> implements List<E> {
 						head = newNode;
 
 					}
-					else if(currentNode == tail){
-						newNode.setNext(null);
-						previousNode.setNext(newNode);
-						tail = newNode;
-					}
 					else{
 
 						newNode.setNext(currentNode);
@@ -231,10 +219,9 @@ public class SinglyLinkedList<E> implements List<E> {
 
 
 	/**
-	 * Overriding the remove method
+	 * Method to remove the Node with index i
 	 * @param i: index of Node to be remove
 	 */
-	@Override
 	public void remove(int i) {
 
 		// Declaring variable to hold the current Node
@@ -256,10 +243,6 @@ public class SinglyLinkedList<E> implements List<E> {
 					if(currentNode == head) {
 
 						head = head.getNext();
-					}
-					else if(currentNode == tail){
-						previousNode.setNext(null);
-						tail = previousNode;
 					}
 					else{
 						previousNode.setNext(currentNode.getNext());
@@ -321,24 +304,21 @@ public class SinglyLinkedList<E> implements List<E> {
 
 
 	/**
-	 * Overriding method to create new ListIterator
+	 * Method to create new ListIterator
 	 */
-	@Override
 	public Iterator<E> iterator() { return new ListIterator(); }
 
 
 	/**
-	 * Overloading method to return the size of the Linked List
+	 * Method to return the size of the Linked List
 	 * @return The size of Linked List
 	 */
-	@Override
 	public int size() { return size; }
 
 
 	/**
-	 * Overloading method to remove the first Node
+	 * Method to remove the first Node
 	 */
-	@Override
 	public void removeFirst() {
 		head = head.getNext();
 		size--;
@@ -346,15 +326,14 @@ public class SinglyLinkedList<E> implements List<E> {
 
 
 	/**
-	 * Overloading method to remove the last Node
+	 * Method to remove the last Node
 	 */
-	@Override
 	public void removeLast() {
 		Node<E> currentNode = head;
 
 		// Removes the last node if that node is the head
-		if (currentNode == null) {
-			head = tail;
+		if (currentNode.getNext() == null) {
+			head = null;
 		}
 
 		else{
@@ -366,20 +345,23 @@ public class SinglyLinkedList<E> implements List<E> {
 
 			// Removes the next Node and sets the current Node as the tail
 			currentNode.setNext(null);
-			tail = currentNode;
 		}
 
 		size--;
 	}
 
-	public E last(){ return tail.getElement(); }
+
+	/**
+	 * Method to return the value of the last Node
+	 * @return Value of the last node
+	 */
+	public E last(){ return this.get(this.size() - 1); }
 
 
 	/**
-	 * Overloading method to add a value to the front of the Linked List
+	 * Method to add a value to the front of the Linked List
 	 * @param e Value to be added
 	 */
-	@Override
 	public void addFirst(E e) {
 		head = new Node<>(e, head);
 		size++;
@@ -394,10 +376,9 @@ public class SinglyLinkedList<E> implements List<E> {
 
 
 	/**
-	 * Overloading method to add a value to the end of the Linked List
+	 * Method to add a value to the end of the Linked List
 	 * @param e Element to be added to the end of the Linked List
 	 */
-	@Override
 	public void addLast(E e) {
 
 		Node<E> newLast = new Node<>(e, null);
@@ -417,35 +398,53 @@ public class SinglyLinkedList<E> implements List<E> {
 
 			// Adds the new Node
 			currentNode.setNext(newLast);
-			tail = newLast;
 		}
 
 		size++;
 
 	}
 
-	public static void main(String[] args) {
-		SinglyLinkedList<Integer> test = new SinglyLinkedList<>();
-		System.out.println(test);
-		test.addFirst(1);
-		System.out.println(test);
-		test.addLast(2);
-		System.out.println(test);
 
-		System.out.println(test.last());
-		test.add(0,4);
-		test.add(2,5);
-		System.out.println(test);
-		test.remove(2);
-		test.remove(0);
-		System.out.println(test);
-		System.out.println(test.get(0));
-		System.out.println(test.first());
-		System.out.println(test.last());
-		test.removeFirst();
-		test.removeLast();
-		System.out.println(test + "\n");
-		System.out.println(test.size());
+	public static void main(String[] args) {
+
+		SinglyLinkedList<Integer> ll = new SinglyLinkedList<>();
+		ll.addFirst(1);
+		ll.addFirst(2);
+
+		ll.addFirst(0);
+		ll.addFirst(1);
+		ll.addFirst(3);
+		ll.addFirst(4);
+		ll.addFirst(5);
+		ll.add(3,2);
+		System.out.println(ll);
+
+		ll.addFirst(-100);
+		ll.addFirst(+100);
+		System.out.println(ll);
+
+		ll.removeFirst();
+		ll.removeLast();
+
+		System.out.println(ll);
+
+		ll.remove(2);
+		System.out.println(ll);
+
+		ll.removeFirst();
+		System.out.println(ll);
+
+		ll.removeLast();
+		System.out.println(ll);
+
+		ll.removeFirst();
+		System.out.println(ll);
+
+		ll.addFirst(9999);
+		ll.addFirst(8888);
+		ll.addFirst(7777);
+		System.out.println(ll.first());
+		System.out.println(ll.get(1));
 
 	}
 }
