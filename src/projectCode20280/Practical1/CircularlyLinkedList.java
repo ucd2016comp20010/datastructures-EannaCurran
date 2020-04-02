@@ -15,40 +15,24 @@ public class CircularlyLinkedList<E> implements List<E> {
 	/**
 	 * Empty constructor for Circularly Linked List
 	 */
-	public CircularlyLinkedList() {
-	}
+	public CircularlyLinkedList() { }
 
-	public static void main(String[] args) {
-		CircularlyLinkedList<Integer> ll = new CircularlyLinkedList<>();
-		for (int i = 0; i < 10; i++) {
-			ll.addFirst(i);
-		}
-		System.out.println(ll);
-		ll.removeFirst();
-		System.out.println(ll);
-		ll.removeLast();
-		System.out.println(ll);
-		ll.rotate();
-		System.out.println(ll);
-	}
 
 	/**
 	 * Method to get the size of the Circularly Linked List
 	 *
 	 * @return Integer representing the size
 	 */
-	public int size() {
-		return size;
-	}
+	public int size() { return size; }
+
 
 	/**
 	 * Method to check if the Circularly Linked List contains any Nodes
 	 *
 	 * @return Boolean result
 	 */
-	public boolean isEmpty() {
-		return size == 0;
-	}
+	public boolean isEmpty() { return size == 0; }
+
 
 	/**
 	 * Method to get the element of the Node with a given index
@@ -77,6 +61,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 		return null;
 
 	}
+
 
 	/**
 	 * Method to add a new Node
@@ -114,6 +99,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 
 	}
 
+
 	/**
 	 * Method to remove the Node with index i
 	 *
@@ -144,6 +130,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 		}
 	}
 
+
 	/**
 	 * Method to remove the first Node
 	 */
@@ -168,6 +155,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 			size--;
 		}
 	}
+
 
 	/**
 	 * Method to remove the last Node
@@ -198,14 +186,14 @@ public class CircularlyLinkedList<E> implements List<E> {
 		}
 	}
 
+
 	/**
 	 * Iterator constructor
 	 *
 	 * @return New List Iterator
 	 */
-	public Iterator<E> iterator() {
-		return new ListIterator();
-	}
+	public Iterator<E> iterator() { return new ListIterator(); }
+
 
 	/**
 	 * Method to add a new Node to the start
@@ -230,6 +218,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 
 	}
 
+
 	/**
 	 * Method to add a new Node to the end
 	 *
@@ -241,6 +230,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 
 	}
 
+
 	/**
 	 * Method to move the first Node to the end
 	 */
@@ -249,6 +239,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 			tail = tail.getNext();
 		}
 	}
+
 
 	/**
 	 * toString method for Circularly Linked List
@@ -269,6 +260,44 @@ public class CircularlyLinkedList<E> implements List<E> {
 		return retStr.toString();
 	}
 
+
+	/**
+	 * Iterator class for Circularly Linked List
+	 */
+	private class ListIterator implements Iterator<E> {
+
+
+		// Declaring variables for Iterator
+		Node<E> curr;
+
+
+		/**
+		 * Constructor for Iterator
+		 */
+		public ListIterator() { curr = tail.getNext(); }
+
+
+		/**
+		 * Check if the current Node points to another Node
+		 *
+		 * @return Boolean result
+		 */
+		public boolean hasNext() { return curr != null; }
+
+
+		/**
+		 * Method to get the next Node in the Circularly Linked List
+		 *
+		 * @return The Next Node
+		 */
+		public E next() {
+			E res = curr.getElement();
+			curr = curr.getNext();
+			return res;
+		}
+	}
+
+
 	/**
 	 * Implementation of Node
 	 *
@@ -279,6 +308,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 		// Declaring variables for the Node
 		private E element;
 		private Node<E> next;
+
 
 		/**
 		 * Constructor for Node
@@ -297,9 +327,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 		 *
 		 * @return element of Node
 		 */
-		public E getElement() {
-			return element;
-		}
+		public E getElement() { return element; }
 
 
 		/**
@@ -307,9 +335,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 		 *
 		 * @return Pointer to next Node
 		 */
-		public Node<E> getNext() {
-			return next;
-		}
+		public Node<E> getNext() { return next; }
 
 
 		/**
@@ -317,48 +343,21 @@ public class CircularlyLinkedList<E> implements List<E> {
 		 *
 		 * @param n New Node to be set to next
 		 */
-		public void setNext(Node<E> n) {
-			next = n;
-		}
+		public void setNext(Node<E> n) { next = n; }
 	}
 
-	/**
-	 * Iterator class for Circularly Linked List
-	 */
-	private class ListIterator implements Iterator<E> {
-
-
-		// Declaring variables for Iterator
-		Node<E> curr;
-
-
-		/**
-		 * Constructor for Iterator
-		 */
-		public ListIterator() {
-			curr = tail.getNext();
+	
+	public static void main(String[] args) {
+		CircularlyLinkedList<Integer> ll = new CircularlyLinkedList<>();
+		for (int i = 0; i < 10; i++) {
+			ll.addFirst(i);
 		}
-
-
-		/**
-		 * Check if the current Node points to another Node
-		 *
-		 * @return Boolean result
-		 */
-		public boolean hasNext() {
-			return curr != null;
-		}
-
-
-		/**
-		 * Method to get the next Node in the Circularly Linked List
-		 *
-		 * @return The Next Node
-		 */
-		public E next() {
-			E res = curr.getElement();
-			curr = curr.getNext();
-			return res;
-		}
+		System.out.println(ll);
+		ll.removeFirst();
+		System.out.println(ll);
+		ll.removeLast();
+		System.out.println(ll);
+		ll.rotate();
+		System.out.println(ll);
 	}
 }
