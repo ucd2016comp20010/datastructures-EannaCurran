@@ -24,7 +24,7 @@ public abstract class AbstractPriorityQueue<K,V> implements PriorityQueue<K,V> {
    */
 
 
-  protected static class PQEntry<K,V> implements Entry<K,V> {
+    protected static abstract class PQEntry<K,V> implements Entry<K,V> {
     private K k;  // key
     private V v;  // value
 
@@ -44,7 +44,7 @@ public abstract class AbstractPriorityQueue<K,V> implements PriorityQueue<K,V> {
 
   // instance variable for an AbstractPriorityQueue
   /** The comparator defining the ordering of keys in the priority queue. */
-  private Comparator<K> comp;
+  private final Comparator<K> comp;
 
   /**
    * Creates an empty priority queue using the given comparator to order keys.

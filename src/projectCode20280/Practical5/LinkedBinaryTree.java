@@ -89,6 +89,13 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
          */
        public void setRight(Node<E> right){ this.right = right; }
 
+       public String toString(){
+           if(this.getElement() == null){
+               return "null";
+           }
+           return this.getElement().toString();
+       }
+
 
     }
 
@@ -130,7 +137,7 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
      */
     protected Node<E> validate(Position<E> p) throws IllegalArgumentException {
         if (!(p instanceof Node))
-            throw new IllegalArgumentException("Not valid position type");
+            return null;
         Node<E> node = (Node<E>) p;       // safe cast
         if (node.getParent() == node)     // our convention for defunct node
            throw new IllegalArgumentException("p is no longer in the tree");
@@ -348,8 +355,36 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
      * @throws IllegalArgumentException if p has two children.
      */
     public E remove(Position<E> p) throws IllegalArgumentException {
-        //TODO
-        return null;
+
+        Node<E> n = (Node<E>) p;
+
+        if(numChildren(n) == 2){
+            throw new IllegalArgumentException("Cannot remove node with two children");
+        }
+
+        Node<E> child;
+        if(n.getLeft() != null){
+            child = n.getLeft();
+        } else {
+            child = n.getRight();
+        }
+
+        if(child != null){
+            child.setParent(n.getParent());
+        }
+
+        if(n == root){
+            root = child;
+        }else {
+            Node<E> parent = n.getParent();
+            if(n == parent.getLeft()){
+                parent.setLeft(child);
+            } else {
+                parent.setRight(child);
+            }
+        }
+        size--;
+        return n.getElement();
     }
 
     public String toString() {
@@ -371,7 +406,6 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
         for (int i : arr) {
             bt.insert(i);
         }
-        System.out.println(bt);
 
     }
 } 

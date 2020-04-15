@@ -306,7 +306,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 	private static class Node<E> {
 
 		// Declaring variables for the Node
-		private E element;
+		private final E element;
 		private Node<E> next;
 
 
@@ -346,7 +346,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 		public void setNext(Node<E> n) { next = n; }
 	}
 
-	
+
 	public static void main(String[] args) {
 		CircularlyLinkedList<Integer> ll = new CircularlyLinkedList<>();
 		for (int i = 0; i < 10; i++) {

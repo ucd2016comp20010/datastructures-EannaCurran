@@ -35,7 +35,12 @@ public class HeapPriorityQueue<K,V> extends AbstractPriorityQueue<K,V> {
     super();
 
     for(int i = 0; i < Math.min(keys.length, values.length); i++){
-      heap.add(new PQEntry<>(keys[i], values[i]));
+      heap.add(new PQEntry<>(keys[i], values[i]) {
+        @Override
+        public int compareTo(Entry<K, V> o) {
+          return 0;
+        }
+      });
     }
 
     heapify();
@@ -130,7 +135,12 @@ public class HeapPriorityQueue<K,V> extends AbstractPriorityQueue<K,V> {
   @Override
   public Entry<K,V> insert(K key, V value) throws IllegalArgumentException {
     checkKey(key);
-    Entry<K, V> newest = new PQEntry<>(key,value);
+    Entry<K, V> newest = new PQEntry<>(key, value) {
+      @Override
+      public int compareTo(Entry<K, V> o) {
+        return 0;
+      }
+    };
     heap.add(newest);
     upheap(heap.size() - 1);
     return newest;
