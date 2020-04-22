@@ -32,6 +32,6 @@ public class Collatz {
 
 
 	public static void main(String[] args) {
-		System.out.println(CollatzSolution(871));
+		System.out.println(CollatzSolution(9));
 	}
 }

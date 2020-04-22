@@ -166,17 +166,12 @@ public class HeapPriorityQueue<K,V> extends AbstractPriorityQueue<K,V> {
   public String toString(){
 
     StringBuilder answer = new StringBuilder();
+    answer.append("[");
     for(int i = 0; i < heap.size() - 1; i++){
-      answer.append("Parent: [").append(heap.get(i).getKey()).append(" ").append(heap.get(i).getValue()).append("] ");
-      if(hasLeft(i)){
-        answer.append("Left Child: [").append(heap.get(this.left(i)).getKey()).append(" ").append(heap.get(this.left(i)).getValue()).append("] ");
-      }
-      if(hasRight(i)){
-        answer.append("Right Child: [").append(heap.get(this.right(i)).getKey()).append(" ").append(heap.get(this.right(i)).getValue()).append("]");
-      }
-      answer.append("\n");
-
+      answer.append(heap.get(i).getKey() + ", ");
     }
+    answer.append(heap.get(heap.size() - 1).getKey());
+    answer.append("]");
 
     return answer.toString();
   }

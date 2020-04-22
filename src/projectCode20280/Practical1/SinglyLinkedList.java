@@ -28,7 +28,7 @@ public class SinglyLinkedList<E> implements List<E> {
 	public static class Node<E> {
 
 		// Declaring variables
-		private E element;
+		private final E element;
 		private Node<E> next;
 
 
@@ -113,16 +113,20 @@ public class SinglyLinkedList<E> implements List<E> {
 		// Declaring empty String
 		StringBuilder retStr = new StringBuilder();
 
+		retStr.append("[");
+
 		// Accessing head Node
 		Node<E> current = head;
 
 		// Loops through each Node and appends their element to the String
-		while(current != null){
+		while(current.getNext() != null){
 
 			retStr.append(current.getElement());
-			retStr.append(" ");
+			retStr.append(", ");
 			current = current.getNext();
 		}
+		retStr.append(current.getElement());
+		retStr.append("]");
 
 		// Returns the modified String
 		return retStr.toString();
@@ -222,7 +226,7 @@ public class SinglyLinkedList<E> implements List<E> {
 	 * Method to remove the Node with index i
 	 * @param i: index of Node to be remove
 	 */
-	public void remove(int i) {
+	public E remove(int i) {
 
 		// Declaring variable to hold the current Node
 		Node<E> currentNode = head;
@@ -259,6 +263,9 @@ public class SinglyLinkedList<E> implements List<E> {
 			// Decreases the size of the Linked List
 			size--;
 		}
+
+		return currentNode.getElement();
+
 	}
 
 
@@ -277,7 +284,7 @@ public class SinglyLinkedList<E> implements List<E> {
 		while (temp != null){
 
 			// Checks if the current node has a smaller value than the currently smallest node found
-			if((temp.next != null) && ((Integer) temp.next.element < (Integer) smallest.element)){
+			if((temp.next != null) && (temp.next.element < smallest.element)){
 
 				// Stores the new smallest node
 				smallest = temp.next;
@@ -319,17 +326,31 @@ public class SinglyLinkedList<E> implements List<E> {
 	/**
 	 * Method to remove the first Node
 	 */
-	public void removeFirst() {
-		head = head.getNext();
+	public E removeFirst() {
+		E first = head.element;
+		if(head.getNext() == null){
+			head = null;
+		}
+
+		else {
+			head = head.getNext();
+		}
 		size--;
+		return first;
 	}
 
 
 	/**
 	 * Method to remove the last Node
 	 */
-	public void removeLast() {
+	public E removeLast() {
 		Node<E> currentNode = head;
+		Node<E> removeNode = null;
+
+		// Returns null if the last element is null
+		if(head == null){
+			return null;
+		}
 
 		// Removes the last node if that node is the head
 		if (currentNode.getNext() == null) {
@@ -344,10 +365,12 @@ public class SinglyLinkedList<E> implements List<E> {
 			}
 
 			// Removes the next Node and sets the current Node as the tail
+			removeNode = currentNode.getNext();
 			currentNode.setNext(null);
 		}
 
 		size--;
+		return removeNode.getElement();
 	}
 
 
@@ -372,7 +395,12 @@ public class SinglyLinkedList<E> implements List<E> {
 	 * Method to return the first element in the List
 	 * @return Element within head
 	 */
-	public E first(){ return head.getElement(); }
+	public E first(){
+		if(head != null) {
+			return head.getElement();
+		}
+		return null;
+	}
 
 
 	/**

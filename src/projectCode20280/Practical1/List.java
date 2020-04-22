@@ -11,22 +11,22 @@ package projectCode20280.Practical1;
 import java.util.Iterator;
 
 public interface List<E> extends Iterable<E> {
-	
+
 	int size();
-	
+
 	boolean isEmpty();
-	
+
 	E get(int i);
-	
+
 	void add(int i, E e);
-	
+
 	void addFirst(E e);
 	void addLast(E e);
-	
-	void remove(int i);
 
-	void removeFirst();
-	void removeLast();
-	
+	E remove(int i);
+
+	E removeFirst();
+	E removeLast();
+
 	Iterator<E> iterator();
 }

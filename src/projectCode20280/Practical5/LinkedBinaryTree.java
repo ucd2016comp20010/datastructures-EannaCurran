@@ -247,17 +247,17 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
     //recursively add Nodes to binary tree in proper position
     private Node<E> addRecursive(Node<E> p, E e) {
 
-        if(p == null){
-            return createNode(e, null, null, null);
+        if(p == null) {
+            p = new Node<>(e, null, null, null);
+            return p;
         }
-
-            if (e.compareTo(p.getElement()) < 0) {
-
-                p.setLeft(addRecursive(p.getLeft(), e));
-            } else {
-
-                p.setRight(addRecursive(p.getRight(), e));
-            }
+        int n = Integer.parseInt(e.toString());
+        int m = Integer.parseInt(p.getElement().toString());
+        if(n >= m){
+            p.right = addRecursive(p.getRight(), e);
+        } else {
+            p.left = addRecursive(p.getLeft(), e);
+        }
 
         return p;
     }
@@ -343,7 +343,26 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
      * @throws IllegalArgumentException if p is not a leaf
      */
     public void attach(Position<E> p, LinkedBinaryTree<E> t1, LinkedBinaryTree<E> t2) throws IllegalArgumentException {
-        //TODO
+
+        Node<E> node = validate(p);
+
+        if(isInternal(p)){ throw new IllegalArgumentException("P is not a leaf"); }
+
+        size += t1.size() + t2.size();
+
+        if(!t1.isEmpty()){
+            t1.root.setParent(node);
+            node.setLeft(t1.root);
+            t1.root = null;
+            t1.size = 0;
+        }
+
+        if(!t2.isEmpty()){
+            t2.root.setParent(node);
+            node.setRight(t2.root);
+            t2.root = null;
+            t2.size = 0;
+        }
     }
 
     /**
@@ -356,7 +375,7 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
      */
     public E remove(Position<E> p) throws IllegalArgumentException {
 
-        Node<E> n = (Node<E>) p;
+        Node<E> n = validate(p);
 
         if(numChildren(n) == 2){
             throw new IllegalArgumentException("Cannot remove node with two children");
@@ -389,23 +408,32 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("[ ");
-        for (Position<E> p : positions()) {
-            sb.append(p.getElement());
-            sb.append(" ");
+        return sb.append((positions().toString())).toString();
+    }
+
+    public Node<E> createLevelOrder(E[] arr){
+        for(E i: arr){
+            root = addRecursive(root, i);
+            size++;
         }
-        sb.append("]");
-        return sb.toString();
+
+        Node temp = root;
+        Iterable<Position<E>> post = postorder();
+        Iterable<Position<E>> in = inorder();
+        Iterable<Position<E>> type = positions();
+
+
+        return root;
     }
 
 
     public static void main(String[] args) {
         LinkedBinaryTree<Integer> bt = new LinkedBinaryTree<>();
 
-        int[] arr = {12, 25, 31, 58, 36, 42, 90, 62, 75};
-        for (int i : arr) {
-            bt.insert(i);
-        }
+        Integer[] arr = new Integer[] {2,3,1,4,5,6,7,8,9,10,11,12};
+        bt.createLevelOrder(arr);
+
+        System.out.println(bt.toString());
 
     }
 } 

@@ -8,8 +8,8 @@ public class DoublyLinkedList<E> implements List<E> {
 
 
 	// Declaring variables for header node, trailer node and size
-	private Node<E> header;
-	private Node<E> trailer;
+	private final Node<E> header;
+	private final Node<E> trailer;
 	private int size = 0;
 
 
@@ -21,7 +21,7 @@ public class DoublyLinkedList<E> implements List<E> {
 
 
 		// Declaring variables
-		private E element;
+		private final E element;
 		private Node<E> previous;
 		private Node<E> next;
 
@@ -244,31 +244,22 @@ public class DoublyLinkedList<E> implements List<E> {
 
 
 	/**
-	 * Method to remove the Node in the ith index
-	 * @param i index of the Node to be removed
+	 * Method to remove the Node
+	 * @param node  Node to be removed
+	 * @return
 	 */
-	public void remove(int i){
+	public E remove(Node<E> node){
 
 		// Gets starting Node and Node to hold previous Node
-		Node<E> currentNode = header.getNext();
-		Node<E> previousNode = null;
+		Node<E> previousNode = node.getPrevious();
+		Node<E> nextNode = node.getNext();
 
-		// Loops through the each Node in the Linked List until index i is reached
-		if(i <= size) {
-			for (int j = 0; j <= i; j++) {
+		previousNode.setNext(nextNode);
+		nextNode.setPrevious(previousNode);
 
-				// Removes Node of index i from the Linked List
-				if (j == i) {
-					currentNode.getNext().setNext(previousNode);
-					currentNode.getNext().setPrevious(previousNode);
-					size--;
-					break;
-				} else {
-					previousNode = currentNode;
-					currentNode = currentNode.getNext();
-				}
-			}
-		}
+		size--;
+		return node.getElement();
+
 	}
 
 
@@ -282,20 +273,23 @@ public class DoublyLinkedList<E> implements List<E> {
 	/**
 	 * Method to remove the first Node
 	 */
-	public void removeFirst() {
+	public E removeFirst() {
 		if(size != 0) {
 			removeNode(header.getNext());
 		}
+		return null;
 	}
 
 
 	/**
 	 * Method to remove the last Node
+	 * @return
 	 */
-	public void removeLast() {
-		if(size != 0) {
-			removeNode(trailer.getPrevious());
+	public E removeLast() {
+		if (isEmpty()) {
+			return null;
 		}
+		return remove(trailer.getPrevious());
 	}
 
 
@@ -313,20 +307,53 @@ public class DoublyLinkedList<E> implements List<E> {
 	public void addLast(E e) { addBetween(e, trailer.getPrevious(), trailer); }
 
 	/**
+	 * Method to remove a node of index i from the Doubly Linked List
+	 * @param i index of node to remove
+	 * @return element of removed node
+	 */
+	@Override
+	public E remove(int i) {
+
+		Node<E> currentNode = header.getNext();
+		if(i < size()) {
+			for (int j = 0; j <= i; j++){
+				if(j == i){
+					currentNode.getPrevious().setNext(currentNode.getNext());
+					currentNode.getNext().setPrevious(currentNode.getPrevious());
+					return currentNode.getElement();
+				}
+				else{
+					currentNode = currentNode.getNext();
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * toString method for DoublyLinkedList
 	 * @return String containing the values within the Doubly Linked List
 	 */
-	public String toString(){
+	public String toString() {
+
+		// Declaring empty String
 		StringBuilder retStr = new StringBuilder();
 
+		// Accessing head Node
 		Node<E> current = header.getNext();
-		for(int i = 0; i < size; i++){
+
+		// Loops through each Node and appends their element to the String
+		retStr.append("[");
+		while(current.getNext().getNext() != null){
+
 			retStr.append(current.getElement());
-			retStr.append(" ");
+			retStr.append(", ");
 			current = current.getNext();
-
 		}
+		retStr.append(current.getElement());
 
+		// Returns the modified String
+		retStr.append("]");
 		return retStr.toString();
 	}
 

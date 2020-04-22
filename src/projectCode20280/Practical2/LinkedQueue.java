@@ -4,11 +4,9 @@ import projectCode20280.Practical1.SinglyLinkedList;
 
 public class LinkedQueue<E> implements Queue<E> {
 
-    private SinglyLinkedList<E> list = new SinglyLinkedList<>();
+    private final SinglyLinkedList<E> list = new SinglyLinkedList<>();
 
-    public LinkedQueue(){
-
-    }
+    public LinkedQueue(){ }
     @Override
     public int size() {
         return list.size();

@@ -103,9 +103,10 @@ public class CircularlyLinkedList<E> implements List<E> {
 	/**
 	 * Method to remove the Node with index i
 	 *
-	 * @param i: index of Node to be remove
+	 * @param i : index of Node to be remove
+	 * @return
 	 */
-	public void remove(int i) {
+	public E remove(int i) {
 
 		// Gets the Node at the head
 		Node<E> currentNode = tail.getNext();
@@ -128,13 +129,14 @@ public class CircularlyLinkedList<E> implements List<E> {
 				}
 			}
 		}
+		return currentNode.getElement();
 	}
 
 
 	/**
 	 * Method to remove the first Node
 	 */
-	public void removeFirst() {
+	public E removeFirst() {
 
 		// Checks that there is a Node to remove
 		if (size != 0) {
@@ -150,17 +152,20 @@ public class CircularlyLinkedList<E> implements List<E> {
 			// Removes the head Node
 			else {
 				tail.setNext(node.getNext());
+				return node.getElement();
 			}
 
 			size--;
 		}
+		return null;
 	}
 
 
 	/**
 	 * Method to remove the last Node
+	 * @return
 	 */
-	public void removeLast() {
+	public E removeLast() {
 
 		// Checks that there is a Node to remove
 		if (size != 0) {
@@ -184,6 +189,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 			}
 			size--;
 		}
+		return null;
 	}
 
 

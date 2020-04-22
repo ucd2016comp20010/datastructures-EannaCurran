@@ -1,10 +1,11 @@
 package projectCode20280.Practical8;
 
-import projectCode20280.Practical5.LinkedBinaryTree;
 import projectCode20280.Practical5.Position;
 import projectCode20280.Practical6.Entry;
+import projectCode20280.Practical9.BalanceableBinaryTree;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * An implementation of a sorted map using a binary search tree.
@@ -13,12 +14,18 @@ import java.util.ArrayList;
 public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 
 	// We reuse the LinkedBinaryTree class. A limitation here is that we only use the key.
-	protected LinkedBinaryTree<Entry<K, V>> tree = new LinkedBinaryTree<>();
+	protected BalanceableBinaryTree <K, V> tree = new BalanceableBinaryTree<>();
 
 	/** Constructs an empty map using the natural ordering of keys. */
 	public TreeMap() {
 		super(); // the AbstractSortedMap constructor
 		tree.addRoot(null); // create a sentinel leaf as root
+	}
+
+
+	public TreeMap(Comparator<K> comp) {
+		super(comp);              // the AbstractSortedMap constructor
+		tree.addRoot(null);       // create a sentinel leaf as root
 	}
 
 	/**
@@ -92,7 +99,7 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 
 		Position<Entry<K, V>> pos = p;
 
-		while(isInternal(p)){ pos = left(pos); }
+		while(isInternal(pos)){ pos = left(pos); }
 
 		return  parent(pos);
 	}
@@ -107,7 +114,7 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 
 		Position<Entry<K, V>> pos = p;
 
-		while (isInternal(p)){ pos = right(pos); }
+		while (isInternal(pos)){ pos = right(pos); }
 
 		return  parent(pos);
 	}
@@ -124,7 +131,7 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 
 		checkKey(key);
 		Position<Entry<K, V>> p = treeSearch(root(), key);
-
+		rebalanceAccess(p);
 		if(isExternal((p))){ return null; }
 
 		return p.getElement().getValue();
@@ -149,10 +156,12 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 
 		if(isExternal(position)){
 			expandExternal(position, entry);
+			rebalanceInsert(position);
 			return null;
 		} else {
 			V old = position.getElement().getValue();
 			set(position, entry);
+			rebalanceAccess(position);
 			return old;
 		}
 	}
@@ -190,8 +199,10 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 				leaf = right(p);
 			}
 
+			Position<Entry<K, V>> sib = sibling(leaf);
 			remove(leaf);
 			remove(p);
+			rebalanceDelete(sib);
 			return old;
 		}
 	}
@@ -239,7 +250,7 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 
 		if(isInternal(p)){ return p.getElement(); }
 
-		while(isRoot(p)){
+		while(!isRoot(p)){
 			if(p == left(parent(p))){
 				return parent(p).getElement();
 			} else{
@@ -267,7 +278,7 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 
 		if(isInternal(p)){ return p.getElement(); }
 
-		while(isRoot(p)){
+		while(!isRoot(p)){
 			if(p == right(parent(p))){
 				return parent(p).getElement();
 			} else{
@@ -294,7 +305,7 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 
 		if(isInternal(p) && isInternal(left(p))){ return treeMax(left(p)).getElement(); }
 
-		while(isRoot(p)){
+		while(!isRoot(p)){
 			if(p == right(parent(p))){
 				return parent(p).getElement();
 			}
@@ -322,7 +333,7 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 
 		if(isInternal(p) && isInternal(left(p))){ return treeMax(left(p)).getElement(); }
 
-		while(isRoot(p)){
+		while(!isRoot(p)){
 			if(p == left(parent(p))){
 				return parent(p).getElement();
 			}
@@ -415,6 +426,29 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 		return tree.toString();
 	}
 
+	/** Overrides the TreeMap rebalancing hook that is called after an insertion. */
+	protected void rebalanceInsert(Position<Entry<K, V>> p) {
+		int i = 0;
+		// TODO Auto-generated method stub
+
+	}
+
+	/** Overrides the TreeMap rebalancing hook that is called after a deletion. */
+	protected void rebalanceDelete(Position<Entry<K, V>> p) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/** Overrides the TreeMap rebalancing hook that is called after a node access. */
+	protected void rebalanceAccess(Position<Entry<K, V>> p) {
+		// TODO Auto-generated method stub
+
+	}
+
+	protected void rotate(Position<Entry<K, V>> p) {
+		// TODO
+	}
+
 	public static void main(String[] args) {
 		TreeMap<Integer, Integer> treeMap = new TreeMap<>();
 
@@ -425,7 +459,7 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 		}
 
 		BinaryTreePrinter<Entry<Integer, Integer>> printer= new BinaryTreePrinter<>(treeMap.tree);
-		System.out.println(printer.print());
+		System.out.println(printer.toString());
 		treeMap.remove(8);
 		printer= new BinaryTreePrinter<>(treeMap.tree);
 		System.out.println(printer.print());
