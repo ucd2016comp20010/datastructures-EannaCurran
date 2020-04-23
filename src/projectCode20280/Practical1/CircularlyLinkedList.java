@@ -83,7 +83,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 			// Loops through until index i is reached
 			for (int count = 0; count < size; count++) {
 
-				if (i == count) {
+				if (i-1 == count) {
 
 					// Adds the new node
 					newNode.setNext(currentNode.getNext());
@@ -168,11 +168,14 @@ public class CircularlyLinkedList<E> implements List<E> {
 	 */
 	public E removeLast() {
 
+
+		Node<E> removedNode = null;
+		Node<E> node = null;
 		// Checks that there is a Node to remove
 		if (size != 0) {
 
 			// GEts the head Node
-			Node<E> node = tail.getNext();
+			node = tail.getNext();
 
 			// Removes the tail Node if it is the only Node
 			if (node == tail) {
@@ -185,12 +188,13 @@ public class CircularlyLinkedList<E> implements List<E> {
 				}
 
 				// Removes the tail Node
+				removedNode = tail;
 				node.setNext(tail.getNext());
 				tail = node;
 			}
 			size--;
 		}
-		return null;
+		return removedNode.getElement();
 	}
 
 
@@ -256,13 +260,16 @@ public class CircularlyLinkedList<E> implements List<E> {
 	public String toString() {
 		StringBuilder retStr = new StringBuilder();
 
+		retStr.append("[");
 		Node<E> current = tail.getNext();
-		for (int i = 0; i < size; i++) {
+		for (int i = 0; i < size-1; i++) {
 			retStr.append(current.getElement());
-			retStr.append(" ");
+			retStr.append(", ");
 			current = current.getNext();
 		}
 
+		retStr.append(current.getElement());
+		retStr.append("]");
 
 		return retStr.toString();
 	}
@@ -276,6 +283,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 
 		// Declaring variables for Iterator
 		Node<E> curr;
+		int count = 0;
 
 
 		/**
@@ -289,7 +297,9 @@ public class CircularlyLinkedList<E> implements List<E> {
 		 *
 		 * @return Boolean result
 		 */
-		public boolean hasNext() { return curr != null; }
+		public boolean hasNext() {
+			return curr != null && count != size;
+		}
 
 
 		/**
@@ -300,6 +310,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 		public E next() {
 			E res = curr.getElement();
 			curr = curr.getNext();
+			count++;
 			return res;
 		}
 	}

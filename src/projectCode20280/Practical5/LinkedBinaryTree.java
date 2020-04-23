@@ -108,7 +108,7 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
     /**
      * The root of the binary tree
      */
-    protected Node<E> root = null;     // root of the tree
+    protected Node root = null;     // root of the tree
 
     /**
      * The number of nodes in the binary tree
