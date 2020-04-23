@@ -104,7 +104,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 	 * Method to remove the Node with index i
 	 *
 	 * @param i : index of Node to be remove
-	 * @return
+	 * @return Removed Node
 	 */
 	public E remove(int i) {
 
@@ -135,6 +135,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 
 	/**
 	 * Method to remove the first Node
+	 * @return Removed Node
 	 */
 	public E removeFirst() {
 
@@ -163,7 +164,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 
 	/**
 	 * Method to remove the last Node
-	 * @return
+	 * @return Removed Node
 	 */
 	public E removeLast() {
 

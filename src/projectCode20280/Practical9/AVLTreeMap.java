@@ -87,7 +87,7 @@ public class AVLTreeMap<K, V> extends TreeMap<K, V> {
 			newHeight = height(position);
 			position = parent(position);
 
-		} while (position != null && oldHeight != newHeight);
+		} while (oldHeight != newHeight && position != null);
 	}
 
 	/** Overrides the TreeMap rebalancing hook that is called after an insertion. */
@@ -120,23 +120,18 @@ public class AVLTreeMap<K, V> extends TreeMap<K, V> {
 		return true;
 	}
 
-	public Position<Entry<K, V>> restructure(Position<Entry<K, V>> position) {
-
-		Position<Entry<K, V>> parentPosition = parent(position);
-		Position<Entry<K, V>> grandparentPosition = parent(parentPosition);
-
-		if((position == right(parentPosition)) == (parentPosition == right(grandparentPosition))){
-
-			rotate(parentPosition);
-			return  parentPosition;
+	public String toString(){
+		StringBuilder string = new StringBuilder();
+		string.append("[");
+		for(Entry<K, V> entry: entrySet()){
+			string.append(entry.getValue() + ", ");
 		}
-
-		else{
-			rotate(position);
-			rotate(position);
-			return  position;
-		}
+		string.setLength(string.length() - 2);
+		string.append("]");
+		return string.toString();
 	}
+
+
 
 
 
@@ -148,7 +143,7 @@ public class AVLTreeMap<K, V> extends TreeMap<K, V> {
 		}
 		BinaryTreePrinter< Entry<Integer, Integer> > printer = new BinaryTreePrinter<>(avl.tree);
 
-		System.out.println(printer.print());
+		System.out.println(avl.toString());
 
 		avl.remove(arr[0]);
 

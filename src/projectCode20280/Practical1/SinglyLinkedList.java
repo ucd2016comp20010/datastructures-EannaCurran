@@ -284,7 +284,7 @@ public class SinglyLinkedList<E> implements List<E> {
 		while (temp != null){
 
 			// Checks if the current node has a smaller value than the currently smallest node found
-			if((temp.next != null) && (temp.next.element < smallest.element)){
+			if((temp.next != null) && (Integer.parseInt(temp.next.element.toString()) < Integer.parseInt(smallest.element.toString()))){
 
 				// Stores the new smallest node
 				smallest = temp.next;

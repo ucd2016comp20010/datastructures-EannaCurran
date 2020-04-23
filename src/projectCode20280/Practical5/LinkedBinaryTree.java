@@ -303,7 +303,7 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
         Node<E> parent = validate(p);
 
         if (parent.getRight() != null) {
-            throw new IllegalArgumentException("Parent Node already has a left child Node");
+            throw new IllegalArgumentException("Parent Node lready has a left child Node");
         }
 
         Node<E> rightChild = createNode(e, parent, null, null);
@@ -427,13 +427,183 @@ public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTre
     }
 
 
+    /**
+     * Assignment 2 Code
+     */
+
+    /**
+     * Method to check if a binary tree is symmetrical
+     * @return Boolean result of check
+     */
+    public boolean isSymmetrical(){
+
+        // Calls recursive helper method to check if tree is symmetrical
+        return symmetricalChecker(root, root);
+    }
+
+
+    /**
+     * Recursive helper method to check if two nodes are and their child nodes are symmetrical
+     * @param node1 First node to check
+     * @param node2 Second node to check
+     * @return Boolean result of if two nodes are symmetrical
+     */
+    private boolean symmetricalChecker(Node node1, Node node2){
+
+        // Base case when both nodes are null, returns true
+        if(node1 == null && node2 == null){
+            return true;
+        }
+
+        // Recursive call to check if the each child node of both nodes are symmetrical
+        if(node1 != null && node2 != null){
+            return symmetricalChecker(node1.getLeft(), node2.getRight()) && symmetricalChecker(node1.getRight(), node2.getLeft());
+        }
+
+        // Otherwise the nodes are not symmetrical since one of them is null and returns false
+        return false;
+    }
+
+
+    /**
+     * Method to convert a binary tree to its mirror image
+     */
+    public void mirror(){
+
+        // Calls recursive helper method to flip the child nodes of each node
+        root = mirrorNode(root);
+    }
+
+
+    /**
+     * Recursive helper method that mirrors the child nodes of a given node
+     * @param node Node to create mirror of
+     * @return Mirrored node
+     */
+    private Node mirrorNode(Node node){
+
+        // Base case when the given node is null
+        if(node == null){
+            return null;
+        }
+
+        // Recursive call to get the mirrors of the child node
+        Node newRight = mirrorNode(node.getLeft());
+        Node newLeft = mirrorNode(node.getRight());
+
+        // Flips the two child nodes
+        node.right = newRight;
+        node.left = newLeft;
+
+        // Returns the mirrored node
+        return node;
+    }
+
+
+    /**
+     * Method to find the shortest distance between two nodes on a binary tree
+     * @param node1 First node to find distance between
+     * @param node2 Second node to find distance between
+     * @return Number of steps between the two nodes
+     */
+    public int dis(Node node1, Node node2){
+
+        // Finds the distance from node 1 to the root
+        int nodeOneToRoot = distanceFromRoot(node1);
+
+        // Finds the distance from node 2 to the root
+        int nodeTwoToRoot = distanceFromRoot(node2);
+
+        // Finds the lowest common parent between node 1 and node 2
+        Node lowestParent = lowestCommonParent(root, node1, node2);
+
+        // Finds the distance between the parent and the root
+        int parentToRoot = distanceFromRoot(lowestParent);
+
+        // Calculates the distance between node 1 and node 2
+        int answer = nodeOneToRoot + nodeTwoToRoot - (2* parentToRoot);
+        return answer;
+    }
+
+    /**
+     * Method to count the distance between a given node and the root
+     * @param node Node to find distance from root
+     * @return Distance from node to root
+     */
+    private int distanceFromRoot(Node node){
+
+        int count = 0;
+
+        // Base case if the node is null or is the root
+        if(node == null || node == root){
+            return count;
+        }
+
+        // Counts the number of steps to parent nodes until the root node is reached
+        for(Node parent = node.getParent(); parent != null; parent = parent.getParent()){
+            count++;
+        }
+
+        // Returns the result
+        return count;
+    }
+
+    /**
+     * Recursive method to find the lowest common parent between two nodes
+     * @param root Root node
+     * @param node1 First node to find lowest common parent
+     * @param node2 Second node to find lowest common parent
+     * @return Lowest common parent of node 1 and 2
+     */
+    private Node lowestCommonParent(Node root, Node node1, Node node2){
+
+        // Base case if the root is null
+        if(root == null){
+            return null;
+        }
+
+        // Second base case if either node is the root
+        if(node1 == root || node2 == root){
+            return root;
+        }
+
+        // Recursive call to find the lowest common parent of the nodes and the current roots children
+        Node leftChild = lowestCommonParent(root.left, node1, node2);
+        Node rightChild = lowestCommonParent(root.right, node1,node2);
+
+        // Case when both children of the root are not null
+        if(leftChild != null && rightChild != null){
+            return root;
+        }
+
+        // If the left child is null, then the right child is returned and vise versa
+        if(leftChild == null){
+            return  rightChild;
+        }
+        else{
+            return leftChild;
+        }
+    }
+
+
     public static void main(String[] args) {
         LinkedBinaryTree<Integer> bt = new LinkedBinaryTree<>();
 
-        Integer[] arr = new Integer[] {2,3,1,4,5,6,7,8,9,10,11,12};
-        bt.createLevelOrder(arr);
+        Integer[] arr = new Integer[] {2,1,3,0,4};
+        bt.root = new Node(2,null,null,null);
+        bt.root.setLeft(new Node(1,bt.root,null,null));
+        bt.root.setRight((new Node(3,bt.root,null,null)));
+        bt.root.left.setLeft((new Node(0,bt.root.left,null,null)));
+        bt.root.right.setRight((new Node(4,bt.root.right,null,null)));
+
 
         System.out.println(bt.toString());
+        System.out.println(bt.isSymmetrical());
+        bt.mirror();
+
+        System.out.println(bt.toString());
+        System.out.println(bt.isSymmetrical());
+        System.out.println(bt.dis(bt.root.right.getRight(),bt.root.getLeft()));
 
     }
 } 

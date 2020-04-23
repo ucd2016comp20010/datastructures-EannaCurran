@@ -13,7 +13,7 @@ import java.util.Comparator;
 
 public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 
-	// We reuse the LinkedBinaryTree class. A limitation here is that we only use the key.
+
 	protected BalanceableBinaryTree <K, V> tree = new BalanceableBinaryTree<>();
 
 	/** Constructs an empty map using the natural ordering of keys. */
@@ -64,6 +64,8 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 	protected void set(Position<Entry<K, V>> p, Entry<K, V> e) { tree.set(p, e); }
 
 	protected Entry<K, V> remove(Position<Entry<K, V>> p) { return tree.remove(p); }
+
+	protected Position<Entry<K, V>> restructure(Position<Entry<K, V>> x) { return tree.restructure(x); }
 
 
 	/**
@@ -423,7 +425,15 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 	}
 
 	public String toString(){
-		return tree.toString();
+
+		StringBuilder string = new StringBuilder();
+		string.append("[");
+		for(Entry<K, V> entry: entrySet()){
+			string.append(entry.getValue() + ", ");
+		}
+		string.setLength(string.length() - 2);
+		string.append("]");
+		return string.toString();
 	}
 
 	/** Overrides the TreeMap rebalancing hook that is called after an insertion. */
@@ -441,18 +451,17 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 
 	/** Overrides the TreeMap rebalancing hook that is called after a node access. */
 	protected void rebalanceAccess(Position<Entry<K, V>> p) {
-		// TODO Auto-generated method stub
 
 	}
 
 	protected void rotate(Position<Entry<K, V>> p) {
-		// TODO
+		tree.rotate(p);
 	}
 
 	public static void main(String[] args) {
 		TreeMap<Integer, Integer> treeMap = new TreeMap<>();
 
-		Integer[] arr = new Integer[]{44,17,88,8,32,56,97,54,82,93,21,29,76,88};
+		Integer[] arr = new Integer[]{35,26,88,8,32,56,97,54,82,93,21,29,76,88};
 
 		for(Integer i : arr){
 			treeMap.put(i, i);

@@ -69,6 +69,7 @@ public class BalanceableBinaryTree<K, V> extends LinkedBinaryTree<Entry<K, V>> {
 	 *
 	 * Caller should ensure that p is not the root.
 	 */
+
 	public void rotate(Position<Entry<K, V>> p) {
 
 		Node<Entry<K, V>> position = validate(p);
