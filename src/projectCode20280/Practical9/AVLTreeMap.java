@@ -1,3 +1,5 @@
+// Practical 9 - Question 1 - AVL Tree Map - Eanna Curran
+
 package projectCode20280.Practical9;
 
 import projectCode20280.Practical5.Position;
@@ -7,18 +9,16 @@ import projectCode20280.Practical8.TreeMap;
 
 import java.util.Comparator;
 
-/**
- * An implementation of a sorted map using an AVL tree.
- */
-
 public class AVLTreeMap<K, V> extends TreeMap<K, V> {
 
 
+	// Declaring variables
 	protected BalanceableBinaryTree<K, V> tree = new BalanceableBinaryTree<>();
 
 
 	/** Constructs an empty map using the natural ordering of keys. */
 	public AVLTreeMap() { super(); }
+
 
 	/**
 	 * Constructs an empty map using the given comparator to order keys.
@@ -27,18 +27,22 @@ public class AVLTreeMap<K, V> extends TreeMap<K, V> {
 	 */
 	public AVLTreeMap(Comparator<K> comp) { super(comp); }
 
+
 	/** Returns the height of the given tree position. */
 	protected int height(Position<Entry<K, V>> position) { return tree.getAux(position); }
+
 
 	/**
 	 * Recomputes the height of the given position based on its children's heights.
 	 */
 	protected void recomputeHeight(Position<Entry<K, V>> position) { tree.setAux(position, 1 + Math.max(height(left(position)), height(right(position)))); }
 
+
 	/** Returns whether a position has balance factor between -1 and 1 inclusive. */
 	protected boolean isBalanced(Position<Entry<K, V>> position) { return Math.abs(height(left(position)) - height(right(position))) <= 1; }
 
-	/** Returns a child of p with height no smaller than that of the other child. */
+
+	/** Returns a child of p with height not smaller than that of the other child. */
 	protected Position<Entry<K, V>> tallerChild(Position<Entry<K, V>> position) {
 
 		if(height(left(position)) > height(right(position))){
@@ -50,7 +54,7 @@ public class AVLTreeMap<K, V> extends TreeMap<K, V> {
 		}
 
 		else if(isRoot(position)){
-			return  left(position);
+			return left(position);
 		}
 
 		else if(position == left(parent(position))){
@@ -58,9 +62,10 @@ public class AVLTreeMap<K, V> extends TreeMap<K, V> {
 		}
 
 		else{
-			return  right(position);
+			return right(position);
 		}
 	}
+
 
 	/**
 	 * Utility used to rebalance after an insert or removal operation. This
@@ -90,11 +95,11 @@ public class AVLTreeMap<K, V> extends TreeMap<K, V> {
 		} while (oldHeight != newHeight && position != null);
 	}
 
+
 	/** Overrides the TreeMap rebalancing hook that is called after an insertion. */
 	@Override
-	protected void rebalanceInsert(Position<Entry<K, V>> position) {
-		rebalance(position);
-	}
+	protected void rebalanceInsert(Position<Entry<K, V>> position) { rebalance(position); }
+
 
 	/** Overrides the TreeMap rebalancing hook that is called after a deletion. */
 	@Override
@@ -120,11 +125,16 @@ public class AVLTreeMap<K, V> extends TreeMap<K, V> {
 		return true;
 	}
 
+
+	/**
+	 * toString method for the AVL tree
+	 * @return Formatted String
+	 */
 	public String toString(){
 		StringBuilder string = new StringBuilder();
 		string.append("[");
 		for(Entry<K, V> entry: entrySet()){
-			string.append(entry.getValue() + ", ");
+			string.append(entry.getValue()).append(", ");
 		}
 		string.setLength(string.length() - 2);
 		string.append("]");

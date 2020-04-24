@@ -86,10 +86,11 @@ public class UnsortedTableMap<K, V> extends AbstractMap<K, V> {
 					return 0;
 				}
 			});
-			return null;
+			index = findIndex(key);
 		}
 
-		return table.get(index).setValue(value);
+		table.get(index).setValue(value);
+		return table.get(index).getValue();
 
 	}
 
@@ -141,14 +142,11 @@ public class UnsortedTableMap<K, V> extends AbstractMap<K, V> {
 
 	// ---------------- nested EntryIterable class ----------------
 	private class EntryIterable implements Iterable<Entry<K, V>> {
-		public Iterator<Entry<K, V>> iterator() {
-			return new EntryIterator();
-		}
+		public Iterator<Entry<K, V>> iterator() { return new EntryIterator(); }
 	} // ----------- end of nested EntryIterable class -----------
 
 	/**
 	 * Returns an iterable collection of all key-value entries of the map.
-	 *
 	 * @return iterable collection of the map's entries
 	 */
 	@Override
@@ -156,7 +154,22 @@ public class UnsortedTableMap<K, V> extends AbstractMap<K, V> {
 		return new EntryIterable();
 	}
 
+
+	/**
+	 * toString method for Unsorted Table Map
+	 * @return String of Unsorted Table Map
+	 */
 	public String toString(){
-		return table.toString();
+		Iterator<Entry<K, V>> entry = entrySet().iterator();
+		StringBuilder string = new StringBuilder();
+		string.append("[");
+
+		while(entry.hasNext()){
+			Entry<K,V> temp = entry.next();
+			string.append(" <").append(temp.getKey()).append(", ").append(temp.getValue()).append("> ");
+		}
+
+		string.append("]");
+		return string.toString();
 	}
 }

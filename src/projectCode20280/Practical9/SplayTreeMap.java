@@ -1,3 +1,5 @@
+// Practical 9 - Question 2 - Splay Tree Map - Eanna Curran
+
 package projectCode20280.Practical9;
 import projectCode20280.Practical5.Position;
 import projectCode20280.Practical6.Entry;
@@ -6,6 +8,7 @@ import projectCode20280.Practical8.TreeMap;
 import java.util.Comparator;
 
 public class SplayTreeMap<K,V> extends TreeMap<K,V> {
+
 
 	protected BalanceableBinaryTree<K, V> tree = new BalanceableBinaryTree<>();
 
@@ -71,10 +74,10 @@ public class SplayTreeMap<K,V> extends TreeMap<K,V> {
 
 	/** Overrides the TreeMap rebalancing hook that is called after a deletion. */
 	@Override
-	protected void rebalanceDelete(Position<Entry<K,V>> posotion) {
+	protected void rebalanceDelete(Position<Entry<K,V>> position) {
 
-		if(!isRoot(posotion)){
-			splay(parent(posotion));
+		if(!isRoot(position)){
+			splay(parent(position));
 		}
 	}
 }
